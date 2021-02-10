@@ -1,6 +1,8 @@
 import React from 'react';
 import Switch from 'react-switch';
 import { FiMoon, FiSun } from 'react-icons/fi';
+import { useWindowLightState } from '../../contexts/windows';
+import { WindowLightTypes } from '../../contexts/windows/types';
 
 interface HeaderProps {
   schedule: {
@@ -10,8 +12,20 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ schedule }) => {
-  const [isTurnOff, setIsTurnOff] = React.useState(false);
+  const { state, dispatch } = useWindowLightState();
+  const [isTurnOff, setIsTurnOff] = React.useState(state.changeAll);
 
+  React.useEffect(() => {
+    setIsTurnOff(state.changeAll);
+  }, [state.changeAll]);
+
+  const handleAllWindowsLight = () => {
+    dispatch({
+      type: isTurnOff
+        ? WindowLightTypes.TURN_ON_WINDOW_LIGHT
+        : WindowLightTypes.TURN_OFF_WINDOW_LIGHT
+    });
+  };
   return (
     <header className="w-full bg-gradient-to-r from-indigo-500 to-indigo-700 flex justify-center">
       <nav className="max-w-screen-xl flex flex-col w-full items-center py-4 tn:flex-row tn:justify-between tn:px-4">
@@ -31,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ schedule }) => {
           uncheckedHandleIcon={<FiSun className="bg-gray-300" />}
           checkedHandleIcon={<FiMoon className="bg-gray-800 text-white" />}
           checked={isTurnOff}
-          onChange={setIsTurnOff}
+          onChange={handleAllWindowsLight}
         />
       </nav>
     </header>
