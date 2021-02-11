@@ -13,11 +13,11 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ schedule }) => {
   const { state, dispatch } = useWindowLightState();
-  const [isTurnOff, setIsTurnOff] = React.useState(state.changeAll);
+  const [isTurnOff, setIsTurnOff] = React.useState(state.changeAllWindowsLight);
 
   React.useEffect(() => {
-    setIsTurnOff(state.changeAll);
-  }, [state.changeAll]);
+    setIsTurnOff(state.changeAllWindowsLight);
+  }, [state.changeAllWindowsLight]);
 
   const handleAllWindowsLight = () => {
     dispatch({

@@ -30,7 +30,7 @@ export const initialData: WindowLightData[] = createWindow(12);
 
 export const initialState: WindowLightState = {
   data: initialData,
-  changeAll: false
+  changeAllWindowsLight: false
 };
 
 export const initialSunlightPhases = createSunlightPhase(colors);

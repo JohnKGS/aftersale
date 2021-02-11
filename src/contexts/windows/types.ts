@@ -13,7 +13,7 @@ export interface WindowLightData {
 
 export interface WindowLightState {
   readonly data: WindowLightData[];
-  readonly changeAll: boolean;
+  readonly changeAllWindowsLight: boolean;
 }
 
 export interface WindowLightActionConfig {

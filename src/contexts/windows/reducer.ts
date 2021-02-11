@@ -15,13 +15,13 @@ const reducer: Reducer<WindowLightState, WindowLightActionConfig> = (
       return {
         ...state,
         data: state.data.map(lamp => ({ ...lamp, offline: false })),
-        changeAll: false
+        changeAllWindowsLight: false
       };
     case WindowLightTypes.TURN_OFF_WINDOW_LIGHT:
       return {
         ...state,
         data: state.data.map(lamp => ({ ...lamp, offline: true })),
-        changeAll: true
+        changeAllWindowsLight: true
       };
     case WindowLightTypes.CHANGE_WINDOW_LIGHT:
       const newData = state.data.map(lamp => ({
@@ -30,19 +30,19 @@ const reducer: Reducer<WindowLightState, WindowLightActionConfig> = (
           lamp.id === action.payload.data.id ? !lamp.offline : lamp.offline
       }));
 
-      const isAllLampsOff = newData.every(lamp => lamp.offline === true);
-      const isAllLampsOn = newData.every(lamp => lamp.offline === false);
+      const isAllWindowsLightOff = newData.every(lamp => lamp.offline === true);
+      const isAllWindowsLightOn = newData.every(lamp => lamp.offline === false);
 
-      const toggle = isAllLampsOn
+      const toggleWindowLight = isAllWindowsLightOn
         ? false
-        : isAllLampsOff
+        : isAllWindowsLightOff
         ? true
-        : state.changeAll;
+        : state.changeAllWindowsLight;
 
       return {
         ...state,
         data: newData,
-        changeAll: toggle
+        changeAllWindowsLight: toggleWindowLight
       };
     default:
       return state;
