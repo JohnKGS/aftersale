@@ -10,6 +10,7 @@ interface Coords {
 }
 
 export const usePosition = () => {
+  const [isPermissionChanged, setIsPermissionChanged] = React.useState(false);
   const [position, setPosition] = React.useState<Position>();
   const [error, setError] = React.useState('');
 
@@ -29,6 +30,15 @@ export const usePosition = () => {
     });
 
     return () => geo.clearWatch(watcherId);
+  }, [isPermissionChanged]);
+
+  React.useEffect(() => {
+    const permissions = navigator.permissions;
+    if (!permissions) return setError('Permissões não suportadas');
+
+    permissions.query({ name: 'geolocation' }).then(result => {
+      result.onchange = () => setIsPermissionChanged(true);
+    });
   }, []);
 
   return { position, error };
