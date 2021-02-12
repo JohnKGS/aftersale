@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Head from 'next/head';
 import colors from '../utils/colors';
 import Edifice from '../components/Edifice';
 import Header from '../components/Header';
@@ -18,6 +19,12 @@ const Home = () => {
     date: '--/--/----',
     time: '--:--:--'
   });
+
+  const initialBackground =
+    new Date().toLocaleTimeString() > '06:00:00' &&
+    new Date().toLocaleTimeString() < '19:00:00'
+      ? colors['solar_noon']
+      : colors['astronomical_twilight_end'];
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -56,14 +63,7 @@ const Home = () => {
     navigator.permissions.query({ name: 'geolocation' }).then(result => {
       const hours = new Date().toLocaleTimeString();
 
-      if (result.state !== 'granted') {
-        const bg =
-          hours > '06:00:00' && hours < '19:00:00'
-            ? colors['solar_noon']
-            : colors['astronomical_twilight_end'];
-
-        return setBackground(bg);
-      }
+      if (result.state !== 'granted') return setBackground(initialBackground);
 
       const selectedBackground = Object.values(sunlightPhases)
         .filter(
@@ -86,22 +86,25 @@ const Home = () => {
   }, [schedule]);
 
   return (
-    <div
-      className="h-screen flex h-screen flex-col justify-between"
-      style={{
-        background: background
-          ? background
-          : `linear-gradient(to right top, #e5e5e5, #d4d4d4, #9f9f9f, #737373)`
-      }}
-    >
-      <Header schedule={schedule} />
-      <main className="pt-8">
-        <div className="w-full flex items-center justify-center">
-          <Edifice />
-        </div>
-        <Street />
-      </main>
-    </div>
+    <>
+      <Head>
+        <title>Aftersale Desafio TECH Trainee</title>
+      </Head>
+      <div
+        className="h-screen flex h-screen flex-col justify-between"
+        style={{
+          background: background ? background : initialBackground
+        }}
+      >
+        <Header schedule={schedule} />
+        <main className="pt-8">
+          <div className="w-full flex items-center justify-center">
+            <Edifice />
+          </div>
+          <Street />
+        </main>
+      </div>
+    </>
   );
 };
 
