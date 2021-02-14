@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ schedule, sunlightPhases }) => {
   const { state, dispatch } = useWindowLightState();
   const [isTurnOff, setIsTurnOff] = React.useState(state.changeAllWindowsLight);
   const hours = new Date().toLocaleTimeString();
-  const conditional =
+  const condition =
     hours >
       (!!sunlightPhases['sunrise'].hour
         ? sunlightPhases['sunrise'].hour
@@ -33,11 +33,11 @@ const Header: React.FC<HeaderProps> = ({ schedule, sunlightPhases }) => {
 
   React.useEffect(() => {
     dispatch({
-      type: conditional
+      type: condition
         ? WindowLightTypes.TURN_OFF_WINDOW_LIGHT
         : WindowLightTypes.TURN_ON_WINDOW_LIGHT
     });
-  }, [conditional]);
+  }, [condition]);
 
   const handleAllWindowsLight = () => {
     dispatch({
