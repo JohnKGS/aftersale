@@ -97,7 +97,7 @@ const Home = () => {
           background: background ? background : initialBackground
         }}
       >
-        <Header schedule={schedule} />
+        <Header schedule={schedule} sunlightPhases={sunlightPhases} />
         <main className="pt-8">
           <div className="w-full flex items-center justify-center">
             <Edifice />
