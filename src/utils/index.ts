@@ -23,7 +23,7 @@ const createSunlightPhase = (colors: SunlightPhases) => {
 
 export const convertTimeToSeconds = (time: string) => {
   const [hour, minutes, seconds] = time.split(':').map(Number);
-  return hour === 0 ? 24 : hour * 3600 + minutes * 60 + seconds;
+  return hour * 3600 + minutes * 60 + seconds;
 };
 
 export const initialData: WindowLightData[] = createWindow(12);

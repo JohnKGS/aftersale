@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import colors from '../utils/colors';
 import Edifice from '../components/Edifice';
 import Header from '../components/Header';
@@ -108,4 +109,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default dynamic(() => Promise.resolve(Home), { ssr: false });
